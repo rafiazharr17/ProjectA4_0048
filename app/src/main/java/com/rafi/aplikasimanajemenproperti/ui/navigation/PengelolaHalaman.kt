@@ -8,14 +8,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.rafi.aplikasimanajemenproperti.ui.home.DestinasiHomePage
-import com.rafi.aplikasimanajemenproperti.ui.home.HomePageView
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DestinasiDetailPemilik
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DestinasiHomePemilik
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DestinasiInsertPemilik
+import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DestinasiUpdatePemilik
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DetailPemilikView
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.HomePemilikView
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.InsertPemilikView
+import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.UpdatePemilikView
 
 @Composable
 fun PengelolaHalaman(
@@ -23,20 +23,9 @@ fun PengelolaHalaman(
 ){
     NavHost(
         navController = navController,
-        startDestination = DestinasiHomePage.route,
+        startDestination = DestinasiHomePemilik.route,
         modifier = Modifier,
     ){
-        composable(DestinasiHomePage.route){
-            HomePageView(
-                onPropertiClick = {},
-                onManajerPropertiClick = {},
-                onJenisPropertiClick = {},
-                onPemilikClick = {
-                    navController.navigate(DestinasiHomePemilik.route)
-                }
-            )
-        }
-
         composable(DestinasiHomePemilik.route){
             HomePemilikView(
                 navigateToItemEntry = {
@@ -48,6 +37,10 @@ fun PengelolaHalaman(
                 },
                 onBackClick = {
                     navController.popBackStack()
+                },
+                onEditClick = { id ->
+                    navController.navigate("${DestinasiUpdatePemilik.route}/$id")
+                    println("PengelolaHalaman: idPemilik = $id")
                 }
             )
         }
