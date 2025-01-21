@@ -59,5 +59,28 @@ fun PengelolaHalaman(
                 }
             )
         }
+
+        composable (
+            DestinasiDetailPemilik.routeWithArg,
+            arguments = listOf(
+                navArgument(DestinasiDetailPemilik.ID) {
+                    type = NavType.IntType
+                }
+            )
+        ){
+            val id = it.arguments?.getInt(DestinasiDetailPemilik.ID)
+
+            id?.let { id ->
+                DetailPemilikView(
+                    navigateBack = {
+                        navController.navigate(DestinasiHomePemilik.route) {
+                            popUpTo(DestinasiHomePemilik.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
+            }
+        }
     }
 }
