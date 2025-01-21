@@ -1,6 +1,8 @@
 package com.rafi.aplikasimanajemenproperti.ui.pemilik.view
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
@@ -16,12 +18,42 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rafi.aplikasimanajemenproperti.model.Pemilik
 import com.rafi.aplikasimanajemenproperti.ui.navigation.DestinasiNavigasi
+import com.rafi.aplikasimanajemenproperti.ui.pemilik.viewmodel.DetailPemilikUiState
 
 object DestinasiDetailPemilik : DestinasiNavigasi {
     override val route = "detail"
     override val titleRes = "Detail Pemilik"
     const val ID = "idPemilik"
     val routeWithArg = "$route/{$ID}"
+}
+
+@Composable
+fun DetailPemilikStatus(
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier,
+    detailPemilikUiState: DetailPemilikUiState
+) {
+    when (detailPemilikUiState) {
+        is DetailPemilikUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+
+        is DetailPemilikUiState.Success -> {
+            if (detailPemilikUiState.pemilik.idPemilik.toString().isEmpty()) {
+                Box(
+                    modifier = modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("Data tidak ditemukan.")
+                }
+            } else {
+                ItemDetailPemilik(
+                    pemilik = detailPemilikUiState.pemilik,
+                    modifier = modifier.fillMaxWidth()
+                )
+            }
+        }
+
+        is DetailPemilikUiState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
+    }
 }
 
 @Composable
