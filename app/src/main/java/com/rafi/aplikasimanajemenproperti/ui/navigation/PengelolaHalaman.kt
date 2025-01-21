@@ -75,5 +75,26 @@ fun PengelolaHalaman(
                 )
             }
         }
+
+        composable(
+            DestinasiUpdatePemilik.routeWithArg,
+            arguments = listOf(
+                navArgument(DestinasiUpdatePemilik.ID){
+                    type = NavType.IntType
+                }
+            )
+        ){
+            val id = it.arguments?.getInt(DestinasiUpdatePemilik.ID)
+            id?.let { id ->
+                UpdatePemilikView(
+                    onBack = {
+                        navController.popBackStack()
+                    },
+                    onNavigate = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+        }
     }
 }
