@@ -9,6 +9,7 @@ import com.rafi.aplikasimanajemenproperti.ManajemenPropertiApp
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.viewmodel.DetailPemilikViewModel
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.viewmodel.HomePemilikViewModel
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.viewmodel.InsertPemilikViewModel
+import com.rafi.aplikasimanajemenproperti.ui.pemilik.viewmodel.UpdatePemilikViewModel
 
 object PenyediaViewModel {
     val Factory = viewModelFactory {
@@ -26,6 +27,13 @@ object PenyediaViewModel {
 
         initializer {
             DetailPemilikViewModel(
+                createSavedStateHandle(),
+                aplikasiManajemenProperti().container.pemilikRepository
+            )
+        }
+
+        initializer {
+            UpdatePemilikViewModel(
                 createSavedStateHandle(),
                 aplikasiManajemenProperti().container.pemilikRepository
             )
