@@ -3,13 +3,17 @@ package com.rafi.aplikasimanajemenproperti.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.rafi.aplikasimanajemenproperti.ui.home.DestinasiHomePage
 import com.rafi.aplikasimanajemenproperti.ui.home.HomePageView
+import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DestinasiDetailPemilik
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DestinasiHomePemilik
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DestinasiInsertPemilik
+import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DetailPemilikView
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.HomePemilikView
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.InsertPemilikView
 
@@ -38,9 +42,9 @@ fun PengelolaHalaman(
                 navigateToItemEntry = {
                     navController.navigate(DestinasiInsertPemilik.route)
                 },
-                onDetailClick = { //id ->
-//                    navController.navigate("${DestinasiDetail.route}/$nim")
-//                    println("PengelolaHalaman: nim = $nim")
+                onDetailClick = { id ->
+                    navController.navigate("${DestinasiDetailPemilik.route}/$id")
+                    println("PengelolaHalaman: idPemilik = $id")
                 },
                 onBackClick = {
                     navController.popBackStack()
