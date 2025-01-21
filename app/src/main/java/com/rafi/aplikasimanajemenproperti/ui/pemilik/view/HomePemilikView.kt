@@ -71,6 +71,7 @@ fun HomePemilikView(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
+    onEditClick: (String) -> Unit = {},
     viewModel: HomePemilikViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ){
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -131,7 +132,8 @@ fun HomePemilikView(
             onDeleteClick = {
                 viewModel.deletePemilik(it.idPemilik)
                 viewModel.getPemilik()
-            }
+            },
+            onEditClick = onEditClick
         )
     }
 }
@@ -143,6 +145,7 @@ fun HomePemilikStatus(
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit,
     onDeleteClick: (Pemilik) -> Unit = {},
+    onEditClick: (String) -> Unit = {}
 ){
     when (homeUiState) {
         is HomeuiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
@@ -160,7 +163,8 @@ fun HomePemilikStatus(
                     },
                     onDeleteClick = {
                         onDeleteClick(it)
-                    }
+                    },
+                    onEditClick = {onEditClick(it.idPemilik.toString())}
                 )
             }
         is HomeuiState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
@@ -209,7 +213,8 @@ fun PemilikLayout(
     pemilik: List<Pemilik>,
     modifier: Modifier = Modifier,
     onDetailClick: (Pemilik) -> Unit,
-    onDeleteClick: (Pemilik) -> Unit = {}
+    onDeleteClick: (Pemilik) -> Unit = {},
+    onEditClick: (Pemilik) -> Unit = {}
 ) {
     LazyColumn(
         modifier = modifier,
@@ -224,6 +229,9 @@ fun PemilikLayout(
                     .clickable { onDetailClick(pmlk) },
                 onDeleteClick = {
                     onDeleteClick(pmlk)
+                },
+                onEditClick = {
+                    onEditClick(pmlk)
                 }
             )
         }
@@ -234,7 +242,8 @@ fun PemilikLayout(
 fun PemilikCard(
     pemilik: Pemilik,
     modifier: Modifier = Modifier,
-    onDeleteClick: (Pemilik) -> Unit = {}
+    onDeleteClick: (Pemilik) -> Unit = {},
+    onEditClick: (Pemilik) -> Unit = {}
 ) {
     var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
 
@@ -295,7 +304,7 @@ fun PemilikCard(
                         tint = MaterialTheme.colorScheme.error
                     )
                 }
-                IconButton(onClick = { }) {
+                IconButton(onClick = { onEditClick(pemilik) }) {
                     Icon(
                         imageVector = Icons.Default.Edit,
                         contentDescription = null,
