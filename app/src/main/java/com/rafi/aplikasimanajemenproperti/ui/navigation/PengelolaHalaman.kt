@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DestinasiHomeManajer
+import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.HomeManajerView
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DestinasiDetailPemilik
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DestinasiHomePemilik
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DestinasiInsertPemilik
@@ -41,6 +43,9 @@ fun PengelolaHalaman(
                 },
                 navigatePemilik = {
                     navController.navigate(DestinasiHomePemilik.route)
+                },
+                navigateManajer = {
+                    navController.navigate(DestinasiHomeManajer.route)
                 }
             )
         }
@@ -95,6 +100,28 @@ fun PengelolaHalaman(
                     }
                 )
             }
+        }
+
+        composable(DestinasiHomeManajer.route){
+            HomeManajerView(
+                navigateToItemEntry = {
+                    //navController.navigate(DestinasiInsertPemilik.route)
+                },
+                onDetailClick = { //id ->
+//                    navController.navigate("${DestinasiDetailPemilik.route}/$id")
+//                    println("PengelolaHalaman: idPemilik = $id")
+                },
+                onEditClick = { //id ->
+//                    navController.navigate("${DestinasiUpdatePemilik.route}/$id")
+//                    println("PengelolaHalaman: idPemilik = $id")
+                },
+                navigatePemilik = {
+                    navController.navigate(DestinasiHomePemilik.route)
+                },
+                navigateManajer = {
+                    navController.navigate(DestinasiHomeManajer.route)
+                }
+            )
         }
     }
 }
