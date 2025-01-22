@@ -10,8 +10,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DestinasiHomeManajer
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DestinasiInsertManajer
+import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DestinasiUpdateManajer
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.HomeManajerView
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.InsertManajerView
+import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.UpdateManajerView
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DestinasiDetailPemilik
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DestinasiHomePemilik
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DestinasiInsertPemilik
@@ -113,9 +115,9 @@ fun PengelolaHalaman(
 //                    navController.navigate("${DestinasiDetailPemilik.route}/$id")
 //                    println("PengelolaHalaman: idPemilik = $id")
                 },
-                onEditClick = { //id ->
-//                    navController.navigate("${DestinasiUpdatePemilik.route}/$id")
-//                    println("PengelolaHalaman: idPemilik = $id")
+                onEditClick = { id ->
+                    navController.navigate("${DestinasiUpdateManajer.route}/$id")
+                    println("PengelolaHalaman: idManajer = $id")
                 },
                 navigatePemilik = {
                     navController.navigate(DestinasiHomePemilik.route)
@@ -132,6 +134,27 @@ fun PengelolaHalaman(
                     navController.popBackStack()
                 }
             )
+        }
+
+        composable(
+            DestinasiUpdateManajer.routeWithArg,
+            arguments = listOf(
+                navArgument(DestinasiUpdateManajer.ID){
+                    type = NavType.IntType
+                }
+            )
+        ){
+            val id = it.arguments?.getInt(DestinasiUpdateManajer.ID)
+            id?.let { id ->
+                UpdateManajerView(
+                    onBack = {
+                        navController.popBackStack()
+                    },
+                    onNavigate = {
+                        navController.popBackStack()
+                    }
+                )
+            }
         }
     }
 }
