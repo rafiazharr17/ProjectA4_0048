@@ -8,9 +8,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DestinasiDetailManajer
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DestinasiHomeManajer
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DestinasiInsertManajer
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DestinasiUpdateManajer
+import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DetailManajerView
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.HomeManajerView
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.InsertManajerView
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.UpdateManajerView
@@ -111,9 +113,9 @@ fun PengelolaHalaman(
                 navigateToItemEntry = {
                     navController.navigate(DestinasiInsertManajer.route)
                 },
-                onDetailClick = { //id ->
-//                    navController.navigate("${DestinasiDetailPemilik.route}/$id")
-//                    println("PengelolaHalaman: idPemilik = $id")
+                onDetailClick = { id ->
+                    navController.navigate("${DestinasiDetailManajer.route}/$id")
+                    println("PengelolaHalaman: idManajer = $id")
                 },
                 onEditClick = { id ->
                     navController.navigate("${DestinasiUpdateManajer.route}/$id")
@@ -152,6 +154,29 @@ fun PengelolaHalaman(
                     },
                     onNavigate = {
                         navController.popBackStack()
+                    }
+                )
+            }
+        }
+
+        composable (
+            DestinasiDetailManajer.routeWithArg,
+            arguments = listOf(
+                navArgument(DestinasiDetailManajer.ID) {
+                    type = NavType.IntType
+                }
+            )
+        ){
+            val id = it.arguments?.getInt(DestinasiDetailManajer.ID)
+
+            id?.let { id ->
+                DetailManajerView(
+                    navigateBack = {
+                        navController.navigate(DestinasiHomeManajer.route) {
+                            popUpTo(DestinasiHomePemilik.route) {
+                                inclusive = true
+                            }
+                        }
                     }
                 )
             }
