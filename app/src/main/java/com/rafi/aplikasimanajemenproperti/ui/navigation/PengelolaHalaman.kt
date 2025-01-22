@@ -9,7 +9,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DestinasiHomeManajer
+import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DestinasiInsertManajer
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.HomeManajerView
+import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.InsertManajerView
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DestinasiDetailPemilik
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DestinasiHomePemilik
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.view.DestinasiInsertPemilik
@@ -105,7 +107,7 @@ fun PengelolaHalaman(
         composable(DestinasiHomeManajer.route){
             HomeManajerView(
                 navigateToItemEntry = {
-                    //navController.navigate(DestinasiInsertPemilik.route)
+                    navController.navigate(DestinasiInsertManajer.route)
                 },
                 onDetailClick = { //id ->
 //                    navController.navigate("${DestinasiDetailPemilik.route}/$id")
@@ -120,6 +122,14 @@ fun PengelolaHalaman(
                 },
                 navigateManajer = {
                     navController.navigate(DestinasiHomeManajer.route)
+                }
+            )
+        }
+
+        composable(DestinasiInsertManajer.route){
+            InsertManajerView(
+                navigateBack = {
+                    navController.popBackStack()
                 }
             )
         }
