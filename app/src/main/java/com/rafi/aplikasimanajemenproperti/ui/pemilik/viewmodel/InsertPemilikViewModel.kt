@@ -36,11 +36,13 @@ class InsertPemilikViewModel(
     }
 
     suspend fun insertPemilik(){
+        val currentEvent = uiEvent.insertPemilikUiEvent
+
         if (validatePemilikFields()) {
             viewModelScope.launch {
                 uiState = FormState.Loading
                 try {
-                    pemilikRepository.insertPemilik(uiEvent.insertPemilikUiEvent.toPemilik())
+                    pemilikRepository.insertPemilik(currentEvent.toPemilik())
                     uiState = FormState.Success("Data Berhasil Disimpan")
                 } catch (e: Exception) {
                     uiState = FormState.Error("Data Gagal Disimpan")
@@ -49,10 +51,6 @@ class InsertPemilikViewModel(
         } else {
             uiState = FormState.Error("Data Tidak Valid")
         }
-    }
-
-    fun resetSnackBarMessage(){
-        uiState = FormState.Idle
     }
 }
 

@@ -98,6 +98,7 @@ fun InsertBodyPemilik(
         FormPemilik(
             insertPemilikUiEvent = uiState.insertPemilikUiEvent,
             onValueChange = onValueChange,
+            errorState = uiState.isEntryValid,
             modifier = Modifier.fillMaxWidth()
         )
         Button (
