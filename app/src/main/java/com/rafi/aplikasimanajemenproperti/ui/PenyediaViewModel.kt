@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.rafi.aplikasimanajemenproperti.ManajemenPropertiApp
+import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.viewmodel.DetailManajerViewModel
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.viewmodel.HomeManajerViewModel
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.viewmodel.InsertManajerViewModel
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.viewmodel.UpdateManajerViewModel
@@ -56,6 +57,13 @@ object PenyediaViewModel {
 
         initializer {
             UpdateManajerViewModel(
+                createSavedStateHandle(),
+                aplikasiManajemenProperti().containerManajer.manajerPropertiRepository
+            )
+        }
+
+        initializer {
+            DetailManajerViewModel(
                 createSavedStateHandle(),
                 aplikasiManajemenProperti().containerManajer.manajerPropertiRepository
             )
