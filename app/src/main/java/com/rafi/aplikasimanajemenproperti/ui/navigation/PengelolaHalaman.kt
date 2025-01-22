@@ -35,12 +35,12 @@ fun PengelolaHalaman(
                     navController.navigate("${DestinasiDetailPemilik.route}/$id")
                     println("PengelolaHalaman: idPemilik = $id")
                 },
-                onBackClick = {
-                    navController.popBackStack()
-                },
                 onEditClick = { id ->
                     navController.navigate("${DestinasiUpdatePemilik.route}/$id")
                     println("PengelolaHalaman: idPemilik = $id")
+                },
+                navigatePemilik = {
+                    navController.navigate(DestinasiHomePemilik.route)
                 }
             )
         }
