@@ -54,6 +54,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rafi.aplikasimanajemenproperti.R
 import com.rafi.aplikasimanajemenproperti.model.Pemilik
 import com.rafi.aplikasimanajemenproperti.ui.PenyediaViewModel
+import com.rafi.aplikasimanajemenproperti.ui.customwidget.CostumeBottomAppBar
 import com.rafi.aplikasimanajemenproperti.ui.customwidget.CostumeTopAppBar
 import com.rafi.aplikasimanajemenproperti.ui.navigation.DestinasiNavigasi
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.viewmodel.HomePemilikViewModel
@@ -61,14 +62,17 @@ import com.rafi.aplikasimanajemenproperti.ui.pemilik.viewmodel.HomeuiState
 
 object DestinasiHomePemilik : DestinasiNavigasi {
     override val route = "home_pemilik"
-    override val titleRes = "Pemilik"
+    override val titleRes = "List Pemilik"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePemilikView(
+    navigatePemilik: () -> Unit = {},
+    navigateManajer: () -> Unit = {},
+    navigateJenis: () -> Unit = {},
+    navigateProperti: () -> Unit = {},
     navigateToItemEntry: () -> Unit,
-    onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
     onEditClick: (String) -> Unit = {},
@@ -80,13 +84,12 @@ fun HomePemilikView(
         topBar = {
             CostumeTopAppBar(
                 title = DestinasiHomePemilik.titleRes,
-                canNavigateBack = true,
+                canNavigateBack = false,
                 canRefresh = true,
                 scrollBehavior = scrollBehavior,
                 onRefresh = {
                     viewModel.getPemilik()
-                },
-                navigateUp = onBackClick
+                }
             )
         },
         floatingActionButton = {
@@ -98,31 +101,14 @@ fun HomePemilikView(
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Kontak")
             }
         },
-//        bottomBar = {
-//            Row(
-//                modifier = Modifier.padding(10.dp),
-//                verticalAlignment = Alignment.CenterVertically,
-//                horizontalArrangement = Arrangement.SpaceEvenly
-//            ) {
-//                BottomAppBar(
-//                    modifier = Modifier.padding(10.dp),
-//                    containerColor = Color.Cyan
-//                ){
-//                    Icon(
-//                        imageVector = Icons.Filled.Home,
-//                        contentDescription = ""
-//                    )
-//                    Icon(
-//                        imageVector = Icons.Filled.Home,
-//                        contentDescription = ""
-//                    )
-//                    Icon(
-//                        imageVector = Icons.Filled.Home,
-//                        contentDescription = ""
-//                    )
-//                }
-//            }
-//        }
+        bottomBar = {
+            CostumeBottomAppBar(
+                navigatePemilik = navigatePemilik,
+                navigateJenis = navigateJenis,
+                navigateProperti = navigateProperti,
+                navigateManajer = navigateManajer
+            )
+        }
     ){ innerPadding ->
         HomePemilikStatus(
             homeUiState = viewModel.pemilikUiState,
