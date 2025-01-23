@@ -36,8 +36,8 @@ class DetailManajerViewModel (
         viewModelScope.launch {
             manajerDetailState = DetailManajerUiState.Loading
             manajerDetailState = try {
-                val pemilik = manajerPropertiRepository.getManajerPropertibyID(_id)
-                DetailManajerUiState.Success(pemilik)
+                val manajer = manajerPropertiRepository.getManajerPropertibyID(_id)
+                DetailManajerUiState.Success(manajer)
             } catch (e: IOException) {
                 DetailManajerUiState.Error
             } catch (e: HttpException) {
