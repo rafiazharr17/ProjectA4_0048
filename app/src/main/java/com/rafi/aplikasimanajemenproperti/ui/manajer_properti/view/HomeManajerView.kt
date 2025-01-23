@@ -137,7 +137,7 @@ fun HomeManajerStatus(
         is HomeManajeruiState.Success ->
             if (homeManajerUiState.manajer.isEmpty()) {
                 return Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = "Tidak ada data Pemilik", style = MaterialTheme.typography.bodyMedium)
+                    Text(text = "Tidak ada data Manajer Properti", style = MaterialTheme.typography.bodyMedium)
                 }
             } else {
                 ManajerLayout(
