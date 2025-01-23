@@ -75,6 +75,7 @@ fun HomeJenisView(
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
     onEditClick: (String) -> Unit = {},
+    activeMenu: String,
     viewModel: HomeJenisViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ){
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -105,7 +106,8 @@ fun HomeJenisView(
                 navigatePemilik = navigatePemilik,
                 navigateJenis = navigateJenis,
                 navigateProperti = navigateProperti,
-                navigateManajer = navigateManajer
+                navigateManajer = navigateManajer,
+                activeMenu = activeMenu
             )
         }
     ){ innerPadding ->

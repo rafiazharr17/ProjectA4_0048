@@ -1,6 +1,10 @@
 package com.rafi.aplikasimanajemenproperti.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -63,7 +67,8 @@ fun PengelolaHalaman(
                 },
                 navigateJenis = {
                     navController.navigate(DestinasiHomeJenis.route)
-                }
+                },
+                activeMenu = "Pemilik"
             )
         }
 
@@ -140,7 +145,8 @@ fun PengelolaHalaman(
                 },
                 navigateJenis = {
                     navController.navigate(DestinasiHomeJenis.route)
-                }
+                },
+                activeMenu = "Manajer"
             )
         }
 
@@ -216,7 +222,8 @@ fun PengelolaHalaman(
                 },
                 navigateJenis = {
                     navController.navigate(DestinasiHomeJenis.route)
-                }
+                },
+                activeMenu = "Jenis"
             )
         }
 
