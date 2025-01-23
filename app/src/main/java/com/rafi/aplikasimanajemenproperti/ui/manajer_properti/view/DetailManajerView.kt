@@ -87,7 +87,7 @@ fun DetailManajerStatus(
             }
         }
 
-        is DetailManajerUiState.Error -> com.rafi.aplikasimanajemenproperti.ui.pemilik.view.OnError(
+        is DetailManajerUiState.Error -> com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.OnError(
             retryAction,
             modifier = modifier.fillMaxSize()
         )
