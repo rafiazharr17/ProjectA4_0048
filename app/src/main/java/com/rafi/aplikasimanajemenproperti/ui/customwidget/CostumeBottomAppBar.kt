@@ -1,11 +1,11 @@
 package com.rafi.aplikasimanajemenproperti.ui.customwidget
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -27,8 +27,9 @@ fun CostumeBottomAppBar(
     navigateManajer: () -> Unit = {},
     navigateJenis: () -> Unit = {},
     navigateProperti: () -> Unit = {},
+    activeMenu: String,
     modifier: Modifier = Modifier
-){
+) {
     BottomAppBar(
         modifier = modifier
             .clip(RoundedCornerShape(topEnd = 30.dp, topStart = 30.dp)),
@@ -40,61 +41,54 @@ fun CostumeBottomAppBar(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                IconButton(onClick = navigateProperti) {
-                    Icon(
-                        painter = painterResource(R.drawable.house),
-                        contentDescription = "Properti"
-                    )
-                }
-                Text(
-                    text = "Properti"
-                )
-            }
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                IconButton(onClick = navigateJenis) {
-                    Icon(
-                        painter = painterResource(R.drawable.todolist),
-                        contentDescription = "List jenis properti"
-                    )
-                }
-                Text(
-                    text = "Jenis Properti"
-                )
-            }
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                IconButton(onClick = navigateManajer) {
-                    Icon(
-                        painter = painterResource(R.drawable.manager),
-                        contentDescription = "Manajer properti"
-                    )
-                }
-                Text(
-                    text = "Manajer"
-                )
-            }
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                IconButton(onClick = navigatePemilik) {
-                    Icon(
-                        painter = painterResource(R.drawable.user),
-                        contentDescription = "Pemilik"
-                    )
-                }
-                Text(
-                    text = "Pemilik"
-                )
-            }
+            IconWithText(
+                isActive = activeMenu == "Properti",
+                iconRes = R.drawable.house,
+                text = "Properti",
+                onClick = navigateProperti
+            )
+            IconWithText(
+                isActive = activeMenu == "Jenis",
+                iconRes = R.drawable.todolist,
+                text = "Jenis Properti",
+                onClick = navigateJenis
+            )
+            IconWithText(
+                isActive = activeMenu == "Manajer",
+                iconRes = R.drawable.manager,
+                text = "Manajer",
+                onClick = navigateManajer
+            )
+            IconWithText(
+                isActive = activeMenu == "Pemilik",
+                iconRes = R.drawable.user,
+                text = "Pemilik",
+                onClick = navigatePemilik
+            )
         }
+    }
+}
+
+@Composable
+fun IconWithText(
+    isActive: Boolean,
+    @DrawableRes iconRes: Int,
+    text: String,
+    onClick: () -> Unit
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        IconButton(onClick = onClick) {
+            Icon(
+                painter = painterResource(iconRes),
+                contentDescription = text,
+                tint = if (isActive) Color.Blue else Color.Black
+            )
+        }
+        Text(
+            text = text,
+            color = if (isActive) Color.Blue else Color.Black
+        )
     }
 }
