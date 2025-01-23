@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.view.DestinasiHomeJenis
+import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.view.HomeJenisView
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DestinasiDetailManajer
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DestinasiHomeManajer
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DestinasiInsertManajer
@@ -52,6 +54,9 @@ fun PengelolaHalaman(
                 },
                 navigateManajer = {
                     navController.navigate(DestinasiHomeManajer.route)
+                },
+                navigateJenis = {
+                    navController.navigate(DestinasiHomeJenis.route)
                 }
             )
         }
@@ -126,6 +131,9 @@ fun PengelolaHalaman(
                 },
                 navigateManajer = {
                     navController.navigate(DestinasiHomeManajer.route)
+                },
+                navigateJenis = {
+                    navController.navigate(DestinasiHomeJenis.route)
                 }
             )
         }
@@ -180,6 +188,23 @@ fun PengelolaHalaman(
                     }
                 )
             }
+        }
+
+        composable(DestinasiHomeJenis.route){
+            HomeJenisView(
+                navigateToItemEntry = {},
+                onDetailClick = {},
+                onEditClick = {},
+                navigatePemilik = {
+                    navController.navigate(DestinasiHomePemilik.route)
+                },
+                navigateManajer = {
+                    navController.navigate(DestinasiHomeManajer.route)
+                },
+                navigateJenis = {
+                    navController.navigate(DestinasiHomeJenis.route)
+                }
+            )
         }
     }
 }
