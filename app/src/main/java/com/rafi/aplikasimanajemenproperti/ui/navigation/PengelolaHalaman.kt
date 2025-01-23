@@ -8,9 +8,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.view.DestinasiDetailJenis
 import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.view.DestinasiHomeJenis
 import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.view.DestinasiInsertJenis
 import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.view.DestinasiUpdateJenis
+import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.view.DetailJenisView
 import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.view.HomeJenisView
 import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.view.InsertJenisView
 import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.view.UpdateJenisView
@@ -185,7 +187,7 @@ fun PengelolaHalaman(
                 DetailManajerView(
                     navigateBack = {
                         navController.navigate(DestinasiHomeManajer.route) {
-                            popUpTo(DestinasiHomePemilik.route) {
+                            popUpTo(DestinasiHomeManajer.route) {
                                 inclusive = true
                             }
                         }
@@ -199,7 +201,9 @@ fun PengelolaHalaman(
                 navigateToItemEntry = {
                     navController.navigate(DestinasiInsertJenis.route)
                 },
-                onDetailClick = {},
+                onDetailClick = { id ->
+                    navController.navigate("${DestinasiDetailJenis.route}/$id")
+                    println("PengelolaHalaman: idJenis = $id")},
                 onEditClick = { id ->
                     navController.navigate("${DestinasiUpdateJenis.route}/$id")
                     println("PengelolaHalaman: idJenis = $id")
@@ -240,6 +244,29 @@ fun PengelolaHalaman(
                     },
                     onNavigate = {
                         navController.popBackStack()
+                    }
+                )
+            }
+        }
+
+        composable (
+            DestinasiDetailJenis.routeWithArg,
+            arguments = listOf(
+                navArgument(DestinasiDetailJenis.ID) {
+                    type = NavType.IntType
+                }
+            )
+        ){
+            val id = it.arguments?.getInt(DestinasiDetailJenis.ID)
+
+            id?.let { id ->
+                DetailJenisView(
+                    navigateBack = {
+                        navController.navigate(DestinasiHomeJenis.route) {
+                            popUpTo(DestinasiHomeJenis.route) {
+                                inclusive = true
+                            }
+                        }
                     }
                 )
             }
