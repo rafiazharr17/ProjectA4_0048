@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.rafi.aplikasimanajemenproperti.ManajemenPropertiApp
 import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.viewmodel.HomeJenisViewModel
+import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.viewmodel.InsertJenisViewModel
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.viewmodel.DetailManajerViewModel
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.viewmodel.HomeManajerViewModel
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.viewmodel.InsertManajerViewModel
@@ -72,6 +73,12 @@ object PenyediaViewModel {
 
         initializer {
             HomeJenisViewModel(
+                aplikasiManajemenProperti().containerJenis.jenisPropertiRepository
+            )
+        }
+
+        initializer {
+            InsertJenisViewModel(
                 aplikasiManajemenProperti().containerJenis.jenisPropertiRepository
             )
         }
