@@ -10,8 +10,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.view.DestinasiHomeJenis
 import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.view.DestinasiInsertJenis
+import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.view.DestinasiUpdateJenis
 import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.view.HomeJenisView
 import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.view.InsertJenisView
+import com.rafi.aplikasimanajemenproperti.ui.jenis_properti.view.UpdateJenisView
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DestinasiDetailManajer
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DestinasiHomeManajer
 import com.rafi.aplikasimanajemenproperti.ui.manajer_properti.view.DestinasiInsertManajer
@@ -198,7 +200,10 @@ fun PengelolaHalaman(
                     navController.navigate(DestinasiInsertJenis.route)
                 },
                 onDetailClick = {},
-                onEditClick = {},
+                onEditClick = { id ->
+                    navController.navigate("${DestinasiUpdateJenis.route}/$id")
+                    println("PengelolaHalaman: idJenis = $id")
+                },
                 navigatePemilik = {
                     navController.navigate(DestinasiHomePemilik.route)
                 },
@@ -217,6 +222,27 @@ fun PengelolaHalaman(
                     navController.popBackStack()
                 }
             )
+        }
+
+        composable(
+            DestinasiUpdateJenis.routeWithArg,
+            arguments = listOf(
+                navArgument(DestinasiUpdateJenis.ID){
+                    type = NavType.IntType
+                }
+            )
+        ){
+            val id = it.arguments?.getInt(DestinasiUpdateJenis.ID)
+            id?.let { id ->
+                UpdateJenisView(
+                    onBack = {
+                        navController.popBackStack()
+                    },
+                    onNavigate = {
+                        navController.popBackStack()
+                    }
+                )
+            }
         }
     }
 }
