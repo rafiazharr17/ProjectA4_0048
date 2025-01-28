@@ -15,6 +15,8 @@ interface ManajerPropertiRepository {
     suspend fun deleteManajerProperti(idManajer: Int)
 
     suspend fun getManajerPropertibyID(idManajer: Int): ManajerProperti
+
+    suspend fun getAllManajer(): List<ManajerProperti>
 }
 
 class NetworkManajerPropertiRepository(
@@ -49,4 +51,8 @@ class NetworkManajerPropertiRepository(
 
     override suspend fun getManajerProperti(): AllManajerResponse =
         manajerPropertiService.getAllManajerProperti()
+
+    override suspend fun getAllManajer(): List<ManajerProperti> {
+        return manajerPropertiService.getAllManajerProperti().data
+    }
 }

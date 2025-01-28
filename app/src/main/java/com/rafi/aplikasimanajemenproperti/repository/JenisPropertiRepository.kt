@@ -15,6 +15,8 @@ interface JenisPropertiRepository {
     suspend fun deleteJenisProperti(idJenis: Int)
 
     suspend fun getJenisPropertibyID(idJenis: Int): JenisProperti
+
+    suspend fun getAllJenis(): List<JenisProperti>
 }
 
 class NetworkJenisPropertiRepository(
@@ -49,4 +51,8 @@ class NetworkJenisPropertiRepository(
 
     override suspend fun getJenisProperti(): AllJenisResponse =
         jenisPropertiService.getAllJenisProperti()
+
+    override suspend fun getAllJenis(): List<JenisProperti> {
+        return jenisPropertiService.getAllJenisProperti().data
+    }
 }

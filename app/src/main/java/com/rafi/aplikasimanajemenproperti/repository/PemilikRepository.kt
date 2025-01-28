@@ -15,6 +15,8 @@ interface PemilikRepository {
     suspend fun deletePemilik(idPemilik: Int)
 
     suspend fun getPemilikbyID(idPemilik: Int): Pemilik
+
+    suspend fun getAllPemilik(): List<Pemilik>
 }
 
 class NetworkPemilikRepository(
@@ -49,4 +51,8 @@ class NetworkPemilikRepository(
 
     override suspend fun getPemilik(): AllPemilikResponse =
         pemilikService.getAllPemilik()
+
+    override suspend fun getAllPemilik(): List<Pemilik> {
+        return pemilikService.getAllPemilik().data
+    }
 }
