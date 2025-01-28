@@ -45,6 +45,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -243,6 +244,14 @@ fun PropertiCard(
 
     val formattedHarga = NumberFormat.getNumberInstance(Locale("id", "ID")).format(properti.harga)
 
+    fun colorStatus(statusProperti: String): Color {
+        return when (statusProperti) {
+            "Tersedia" -> Color.Green
+            "Tersewa" -> Color.Blue
+            else -> Color.Red
+        }
+    }
+
     Card(
         modifier = modifier
             .padding(8.dp)
@@ -295,9 +304,16 @@ fun PropertiCard(
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
-                        text = "Status: ${properti.statusProperti}",
+                        text = "Status:",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        text = properti.statusProperti,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = colorStatus(properti.statusProperti),
+                        fontWeight = FontWeight.Bold
                     )
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
