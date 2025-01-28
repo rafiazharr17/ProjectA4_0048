@@ -18,6 +18,10 @@ import com.rafi.aplikasimanajemenproperti.ui.pemilik.viewmodel.DetailPemilikView
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.viewmodel.HomePemilikViewModel
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.viewmodel.InsertPemilikViewModel
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.viewmodel.UpdatePemilikViewModel
+import com.rafi.aplikasimanajemenproperti.ui.properti.viewmodel.DetailPropertiViewModel
+import com.rafi.aplikasimanajemenproperti.ui.properti.viewmodel.HomePropertiViewModel
+import com.rafi.aplikasimanajemenproperti.ui.properti.viewmodel.InsertPropertiViewModel
+import com.rafi.aplikasimanajemenproperti.ui.properti.viewmodel.UpdatePropertiViewModel
 
 object PenyediaViewModel {
     val Factory = viewModelFactory {
@@ -96,6 +100,41 @@ object PenyediaViewModel {
             DetailJenisViewModel(
                 createSavedStateHandle(),
                 aplikasiManajemenProperti().containerJenis.jenisPropertiRepository
+            )
+        }
+
+        initializer {
+            InsertPropertiViewModel(
+                aplikasiManajemenProperti().containerProperti.propertiRepository,
+                aplikasiManajemenProperti().container.pemilikRepository,
+                aplikasiManajemenProperti().containerJenis.jenisPropertiRepository,
+                aplikasiManajemenProperti().containerManajer.manajerPropertiRepository
+            )
+        }
+
+        initializer {
+            HomePropertiViewModel(
+                aplikasiManajemenProperti().containerProperti.propertiRepository
+            )
+        }
+
+        initializer {
+            DetailPropertiViewModel(
+                createSavedStateHandle(),
+                aplikasiManajemenProperti().containerProperti.propertiRepository,
+                aplikasiManajemenProperti().container.pemilikRepository,
+                aplikasiManajemenProperti().containerJenis.jenisPropertiRepository,
+                aplikasiManajemenProperti().containerManajer.manajerPropertiRepository
+            )
+        }
+
+        initializer {
+            UpdatePropertiViewModel(
+                createSavedStateHandle(),
+                aplikasiManajemenProperti().containerProperti.propertiRepository,
+                aplikasiManajemenProperti().container.pemilikRepository,
+                aplikasiManajemenProperti().containerJenis.jenisPropertiRepository,
+                aplikasiManajemenProperti().containerManajer.manajerPropertiRepository
             )
         }
     }
