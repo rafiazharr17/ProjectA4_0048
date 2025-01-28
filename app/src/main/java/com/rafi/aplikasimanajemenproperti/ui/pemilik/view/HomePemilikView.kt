@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
@@ -28,6 +29,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -56,13 +58,15 @@ import com.rafi.aplikasimanajemenproperti.model.Pemilik
 import com.rafi.aplikasimanajemenproperti.ui.PenyediaViewModel
 import com.rafi.aplikasimanajemenproperti.ui.customwidget.CostumeBottomAppBar
 import com.rafi.aplikasimanajemenproperti.ui.customwidget.CostumeTopAppBar
+import com.rafi.aplikasimanajemenproperti.ui.customwidget.TopAppBarHome
 import com.rafi.aplikasimanajemenproperti.ui.navigation.DestinasiNavigasi
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.viewmodel.HomePemilikViewModel
 import com.rafi.aplikasimanajemenproperti.ui.pemilik.viewmodel.HomeuiState
+import com.rafi.aplikasimanajemenproperti.ui.properti.view.DestinasiHomeProperti
 
 object DestinasiHomePemilik : DestinasiNavigasi {
     override val route = "home_pemilik"
-    override val titleRes = "List Pemilik"
+    override val titleRes = "List Pemilik Properti"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -70,7 +74,6 @@ object DestinasiHomePemilik : DestinasiNavigasi {
 fun HomePemilikView(
     navigatePemilik: () -> Unit = {},
     navigateManajer: () -> Unit = {},
-    navigateJenis: () -> Unit = {},
     navigateProperti: () -> Unit = {},
     navigateToItemEntry: () -> Unit,
     modifier: Modifier = Modifier,
@@ -83,14 +86,11 @@ fun HomePemilikView(
     Scaffold (
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            CostumeTopAppBar(
-                title = DestinasiHomePemilik.titleRes,
-                canNavigateBack = false,
-                canRefresh = true,
-                scrollBehavior = scrollBehavior,
+            TopAppBarHome(
                 onRefresh = {
                     viewModel.getPemilik()
-                }
+                },
+                title = DestinasiHomePemilik.titleRes
             )
         },
         floatingActionButton = {
@@ -105,7 +105,6 @@ fun HomePemilikView(
         bottomBar = {
             CostumeBottomAppBar(
                 navigatePemilik = navigatePemilik,
-                navigateJenis = navigateJenis,
                 navigateProperti = navigateProperti,
                 navigateManajer = navigateManajer,
                 activeMenu = activeMenu
@@ -279,20 +278,49 @@ fun PemilikCard(
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSurface
                     )
-                    Text(
-                        text = pemilik.kontakPemilik,
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    Divider(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(top = 5.dp, bottom = 5.dp, end = 5.dp),
+                        thickness = 2.dp,
+                        color = Color.Black
                     )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Call,
+                            contentDescription = ""
+                        )
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        Text(
+                            text = pemilik.kontakPemilik,
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
-                IconButton(onClick = { deleteConfirmationRequired = true }) {
+                IconButton(
+                    onClick = { deleteConfirmationRequired = true },
+                    modifier = Modifier
+                        .background(
+                            MaterialTheme.colorScheme.error.copy(alpha = 0.2f),
+                            shape = CircleShape
+                        )
+                ) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.error
                     )
                 }
-                IconButton(onClick = { onEditClick(pemilik) }) {
+                IconButton(
+                    onClick = { onEditClick(pemilik) },
+                    modifier = Modifier
+                        .background(
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                            shape = CircleShape
+                        )
+                ) {
                     Icon(
                         imageVector = Icons.Default.Edit,
                         contentDescription = null,

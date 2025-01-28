@@ -22,11 +22,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -67,15 +70,11 @@ object DestinasiHomeJenis : DestinasiNavigasi {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeJenisView(
-    navigatePemilik: () -> Unit = {},
-    navigateManajer: () -> Unit = {},
-    navigateJenis: () -> Unit = {},
-    navigateProperti: () -> Unit = {},
+    onBack: () -> Unit,
     navigateToItemEntry: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
     onEditClick: (String) -> Unit = {},
-    activeMenu: String,
     viewModel: HomeJenisViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ){
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -84,7 +83,8 @@ fun HomeJenisView(
         topBar = {
             CostumeTopAppBar(
                 title = DestinasiHomeJenis.titleRes,
-                canNavigateBack = false,
+                canNavigateBack = true,
+                navigateUp = onBack,
                 canRefresh = true,
                 scrollBehavior = scrollBehavior,
                 onRefresh = {
@@ -100,15 +100,6 @@ fun HomeJenisView(
             ){
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Jenis Properti")
             }
-        },
-        bottomBar = {
-            CostumeBottomAppBar(
-                navigatePemilik = navigatePemilik,
-                navigateJenis = navigateJenis,
-                navigateProperti = navigateProperti,
-                navigateManajer = navigateManajer,
-                activeMenu = activeMenu
-            )
         }
     ){ innerPadding ->
         HomeJenisStatus(
@@ -278,20 +269,49 @@ fun JenisCard(
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSurface
                     )
-                    Text(
-                        text = jenisProperti.deskripsiJenis,
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    Divider(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(top = 5.dp, bottom = 5.dp, end = 5.dp),
+                        thickness = 2.dp,
+                        color = Color.Black
                     )
+                    Row(
+                        verticalAlignment = Alignment.Top
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = ""
+                        )
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        Text(
+                            text = jenisProperti.deskripsiJenis,
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
-                IconButton(onClick = { deleteConfirmationRequired = true }) {
+                IconButton(
+                    onClick = { deleteConfirmationRequired = true },
+                    modifier = Modifier
+                        .background(
+                            MaterialTheme.colorScheme.error.copy(alpha = 0.2f),
+                            shape = CircleShape
+                        )
+                ) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.error
                     )
                 }
-                IconButton(onClick = { onEditClick(jenisProperti) }) {
+                IconButton(
+                    onClick = { onEditClick(jenisProperti) },
+                    modifier = Modifier
+                        .background(
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                            shape = CircleShape
+                        )
+                ) {
                     Icon(
                         imageVector = Icons.Default.Edit,
                         contentDescription = null,
