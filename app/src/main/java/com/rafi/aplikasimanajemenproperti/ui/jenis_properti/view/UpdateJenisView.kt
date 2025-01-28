@@ -54,10 +54,12 @@ fun UpdateJenisView(
             uiState = viewModel.updateJenisUiState,
             onClick = {
                 coroutineScope.launch {
-                    viewModel.updateJenis()
-                    delay(600)
-                    withContext(Dispatchers.Main){
-                        onNavigate()
+                    if (viewModel.validateJenisFields()){
+                        viewModel.updateJenis()
+                        delay(600)
+                        withContext(Dispatchers.Main){
+                            onNavigate()
+                        }
                     }
                 }
             }

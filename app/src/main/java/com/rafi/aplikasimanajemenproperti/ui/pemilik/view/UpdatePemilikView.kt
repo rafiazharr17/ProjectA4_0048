@@ -54,10 +54,12 @@ fun UpdatePemilikView(
             uiState = viewModel.updatePemilikUiState,
             onClick = {
                 coroutineScope.launch {
-                    viewModel.updatePemilik()
-                    delay(600)
-                    withContext(Dispatchers.Main){
-                        onNavigate()
+                    if (viewModel.validatePemilikFields()){
+                        viewModel.updatePemilik()
+                        delay(600)
+                        withContext(Dispatchers.Main){
+                            onNavigate()
+                        }
                     }
                 }
             }

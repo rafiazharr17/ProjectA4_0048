@@ -54,10 +54,12 @@ fun UpdateManajerView(
             uiState = viewModel.updateManajerUiState,
             onClick = {
                 coroutineScope.launch {
-                    viewModel.updateManajer()
-                    delay(600)
-                    withContext(Dispatchers.Main){
-                        onNavigate()
+                    if (viewModel.validateManajerFields()){
+                        viewModel.updateManajer()
+                        delay(600)
+                        withContext(Dispatchers.Main){
+                            onNavigate()
+                        }
                     }
                 }
             }
