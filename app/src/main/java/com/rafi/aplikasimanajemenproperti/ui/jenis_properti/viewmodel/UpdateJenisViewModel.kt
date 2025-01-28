@@ -30,12 +30,27 @@ class UpdateJenisViewModel(
         updateJenisUiState = InsertJenisUiState(insertJenisUiEvent = insertJenisUiEvent)
     }
 
+    fun validateJenisFields(): Boolean {
+        val event = updateJenisUiState.insertJenisUiEvent
+        val errorState = FormJenisErrorState(
+            namaJenis = if (event.namaJenis.isNotEmpty()) null else "Nama Jenis tidak boleh kosong",
+            deskripsiJenis = if (event.deskripsiJenis.isNotEmpty()) null else "Deskripsi tidak boleh kosong"
+        )
+
+        updateJenisUiState = updateJenisUiState.copy(isEntryValid = errorState)
+        return errorState.isValid()
+    }
+
     suspend fun updateJenis(){
-        viewModelScope.launch {
-            try {
-                jenisPropertiRepository.updateJenisProperti(_id, updateJenisUiState.insertJenisUiEvent.toJenis())
-            }catch (e: Exception){
-                e.printStackTrace()
+        val currentEvent = updateJenisUiState.insertJenisUiEvent
+
+        if (validateJenisFields()){
+            viewModelScope.launch {
+                try {
+                    jenisPropertiRepository.updateJenisProperti(_id, currentEvent.toJenis())
+                }catch (e: Exception){
+                    e.printStackTrace()
+                }
             }
         }
     }

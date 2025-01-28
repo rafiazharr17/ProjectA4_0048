@@ -30,12 +30,27 @@ class UpdatePemilikViewModel (
         updatePemilikUiState = InsertPemilikUiState(insertPemilikUiEvent = insertPemilikUiEvent)
     }
 
+    fun validatePemilikFields(): Boolean {
+        val event = updatePemilikUiState.insertPemilikUiEvent
+        val errorState = FormPemilikErrorState(
+            namaPemilik = if (event.namaPemilik.isNotEmpty()) null else "Nama Pemilik tidak boleh kosong",
+            kontakPemilik = if (event.kontakPemilik.isNotEmpty()) null else "Kontak tidak boleh kosong"
+        )
+
+        updatePemilikUiState = updatePemilikUiState.copy(isEntryValid = errorState)
+        return errorState.isValid()
+    }
+
     suspend fun updatePemilik(){
-        viewModelScope.launch {
-            try {
-                pemilikRepository.updatePemilik(_id, updatePemilikUiState.insertPemilikUiEvent.toPemilik())
-            }catch (e: Exception){
-                e.printStackTrace()
+        val currentEvent = updatePemilikUiState.insertPemilikUiEvent
+
+        if (validatePemilikFields()){
+            viewModelScope.launch {
+                try {
+                    pemilikRepository.updatePemilik(_id, currentEvent.toPemilik())
+                }catch (e: Exception){
+                    e.printStackTrace()
+                }
             }
         }
     }

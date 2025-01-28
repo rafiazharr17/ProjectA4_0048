@@ -30,12 +30,27 @@ class UpdateManajerViewModel(
         updateManajerUiState = InsertManajerUiState(insertManajerUiEvent = insertManajerUiEvent)
     }
 
+    fun validateManajerFields(): Boolean {
+        val event = updateManajerUiState.insertManajerUiEvent
+        val errorState = FormManajerErrorState(
+            namaManajer = if (event.namaManajer.isNotEmpty()) null else "Nama Manajer tidak boleh kosong",
+            kontakManajer = if (event.kontakManajer.isNotEmpty()) null else "Kontak tidak boleh kosong"
+        )
+
+        updateManajerUiState = updateManajerUiState.copy(isEntryValid = errorState)
+        return errorState.isValid()
+    }
+
     suspend fun updateManajer(){
-        viewModelScope.launch {
-            try {
-                manajerPropertiRepository.updateManajerProperti(_id, updateManajerUiState.insertManajerUiEvent.toManajer())
-            }catch (e: Exception){
-                e.printStackTrace()
+        val currentEvent = updateManajerUiState.insertManajerUiEvent
+
+        if (validateManajerFields()){
+            viewModelScope.launch {
+                try {
+                    manajerPropertiRepository.updateManajerProperti(_id, currentEvent.toManajer())
+                }catch (e: Exception){
+                    e.printStackTrace()
+                }
             }
         }
     }
